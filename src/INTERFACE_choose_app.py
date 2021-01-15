@@ -8,9 +8,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from INTERFACE_dose import Ui_dose as DoseWindow
-from INTERFACE_predi import Ui_MainWindow as PrediWindow
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow, screen_size):
@@ -55,10 +52,10 @@ class Ui_MainWindow(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.pushButton_2.setObjectName("pushButton_2")
         self.horizontalLayout_2.addWidget(self.pushButton_2)
-        
+
         def gotoPredi():
             self.redirect_predi(MainWindow, screen_size)
-        
+
         self.pushButton_2.clicked.connect(gotoPredi)
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -73,14 +70,14 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-    
+
     def redirect_dose(self, MainWindow, screen_size):
         MainWindow.close()
         self.window = QtWidgets.QMainWindow()
         dose = DoseWindow()
         dose.setupUi(self.window, screen_size)
         self.window.show()
-    
+
     def redirect_predi(self, MainWindow, screen_size):
         MainWindow.close()
         self.window = QtWidgets.QMainWindow()

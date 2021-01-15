@@ -24,7 +24,9 @@ class Sensors:
     TOTAL_S = 6
     TOTAL_P = 6
     TO_DPS = 65
-    RESIST = 16384
+    RESIST = 32768
+    IS_MOVING = 20  # TODO se mudar o DPS, essa variavel precisa mudar
+    FILTER_SIZE = 10
     MAX_X = 512
     MAX_FFT = 10
     def __init__(self, maxlen):
@@ -37,6 +39,7 @@ class Sensors:
             self.g.append(dequeSensor(maxlen=maxlen))
 
     def append(self, a, g):
+
         for p, d in zip(a, self.a):
 
             d.append(p/Sensors.RESIST)
@@ -49,6 +52,22 @@ class Sensors:
             self.a[0], self.a[1], self.a[2]
         )
 
+    def abs_moving(self):
+        s = 0
+        # Se q quantidade de dados for maior que o tamanho do filtro
+        if len(self.g[2]) > Sensors.FILTER_SIZE*3:
+            for i in range(3):
+                s = s + \
+                    np.abs(
+                        np.mean(list(self.g[i])[-Sensors.FILTER_SIZE:]) -
+                        np.mean(list(self.g[i])[2*-Sensors.FILTER_SIZE:-Sensors.FILTER_SIZE]))
+
+            return s
+        return np.inf
+
+    def is_stoped(self):
+        return self.abs_moving() < Sensors.IS_MOVING
+
 
 class SensorsSet():
     def __init__(self, ns, maxlen):
@@ -59,6 +78,9 @@ class SensorsSet():
             self.list_s.append(sensor)
             self.dic_s["sensor"+str(i+1)] = sensor
         self.rtc = dequeSensor(maxlen=maxlen)
+
+    def is_stoped(self):
+        return [i.is_stoped() for i in self.list_s]
 
     def __repr__(self):
         s = ""
