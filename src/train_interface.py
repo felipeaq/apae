@@ -11,7 +11,6 @@ class TrainUi(QtWidgets.QMainWindow):
         # Call the inherited classes __init__ method
         super(TrainUi, self).__init__()
         uic.loadUi('../interfaces/treinamento.ui', self)  # Load the .ui file
-        print(self.train)
         self.controller = TrainController()
         self.buttons = set()
         self.button_list = {"append_data": self.append_data_func, "update_phrase": self.update_phrase_func,

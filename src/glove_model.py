@@ -40,9 +40,9 @@ class GloveModel:
     def predict(self, X):
 
         is_predict = self.predict_outlier(X)
-        print(is_predict)
+        #print(is_predict)
         if is_predict[0] == -1:
-            return ""
+            return [""]
 
         pred = self.predic_class(X)
 

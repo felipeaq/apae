@@ -1,11 +1,10 @@
 from read_routine import *
 from bt_connection import *
-
-
-import train_interface
 from data_saver import *
 from glove_model import *
 import time
+if __name__ == "__main__":
+    import train_interface
 
 
 class TrainController:
